@@ -1,6 +1,6 @@
 # APIcado Client
 
-A desktop API client built with Electron and React, similar to Postman.
+A desktop API client built with Electron and React.
 
 ## Getting Started
 
