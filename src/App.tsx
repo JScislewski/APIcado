@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import { sendRequest as apiSendRequest } from './api/api';
+
+import React from 'react';
+import { useApiRequest } from './hooks/useApiRequest';
 import RequestForm from './components/RequestForm';
 import ResponseViewer from './components/ResponseViewer';
 
-function App() {
-  const [url, setUrl] = useState<string>('');
-  const [method, setMethod] = useState<'GET' | 'POST' | 'PUT' | 'DELETE'>('GET');
-  const [body, setBody] = useState<string>('');
-  const [response, setResponse] = useState<string>('');
 
-  const handleSendRequest = async () => {
-    const res = await apiSendRequest({ url, method, body });
-    setResponse(res);
-  };
+function App() {
+  const {
+    url,
+    setUrl,
+    method,
+    setMethod,
+    body,
+    setBody,
+    response,
+    handleSendRequest,
+  } = useApiRequest();
 
   return (
     <div style={{ padding: 32 }}>
