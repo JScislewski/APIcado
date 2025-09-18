@@ -1,4 +1,3 @@
-import axios from 'axios';
 
 export interface ApiRequest {
   url: string;
@@ -6,14 +5,21 @@ export interface ApiRequest {
   body: string;
 }
 
-export async function sendRequest({ url, method, body }: ApiRequest): Promise<string> {
+// TypeScript global declaration for window.api
+interface ApiWindow extends Window {
+  api?: {
+    sendRequest: (params: ApiRequest) => Promise<any>;
+  };
+}
+declare const window: ApiWindow;
+
+export async function sendRequest(params: ApiRequest): Promise<string> {
   try {
-    const res = await axios({
-      url,
-      method,
-      data: body ? JSON.parse(body) : undefined,
-    });
-    return JSON.stringify(res.data, null, 2);
+    if (!window.api) {
+      throw new Error('window.api is not defined. Preload script may not be loaded.');
+    }
+    const res = await window.api.sendRequest(params);
+    return JSON.stringify(res, null, 2);
   } catch (err: any) {
     return err.message;
   }
