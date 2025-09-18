@@ -1,17 +1,13 @@
-
-
 import React, { useState } from 'react';
 import { sendRequest as apiSendRequest } from './api/api';
 import RequestForm from './components/RequestForm';
 import ResponseViewer from './components/ResponseViewer';
 
-
-
 function App() {
-  const [url, setUrl] = useState('');
-  const [method, setMethod] = useState('GET');
-  const [body, setBody] = useState('');
-  const [response, setResponse] = useState('');
+  const [url, setUrl] = useState<string>('');
+  const [method, setMethod] = useState<'GET' | 'POST' | 'PUT' | 'DELETE'>('GET');
+  const [body, setBody] = useState<string>('');
+  const [response, setResponse] = useState<string>('');
 
   const handleSendRequest = async () => {
     const res = await apiSendRequest({ url, method, body });
